@@ -12,6 +12,7 @@ public final class ContactContract {
     public static abstract class Contact implements BaseColumns{
         public static final String TABLE_NAME="contacts";
         public static final String COLUMN_NAME_CONTACT_ID="contact_id";
+        public static final String COLUMN_NAME_TAG = "contact_tag";
         public static final String COLUMN_NAME_CONTACT_NAME="contact_name";
         public static final String COLUMN_NAME_CONTACT_PHOTO="contact_photo";
         public static final String COLUMN_NAME_CONTACT_SOCIAL_NETWORKS="contact_social";

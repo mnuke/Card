@@ -10,9 +10,11 @@ import com.sixbynine.card.model.SocialNetwork;
  */
 public class Contact implements Parcelable{
 
-    private int id; //Database id
-    private int contactId;
+    private long id; //Database id
+    private long contactId;
     private String name;
+    private String tag;
+    private String photoUrl;
     private SocialNetworkMap socialNetworkMap;
 
     public Contact(){
@@ -27,19 +29,19 @@ public class Contact implements Parcelable{
         this.name = name;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
-    public int getContactId() {
+    public long getContactId() {
         return contactId;
     }
 
-    public void setContactId(int contactId) {
+    public void setContactId(long contactId) {
         this.contactId = contactId;
     }
 
@@ -55,6 +57,26 @@ public class Contact implements Parcelable{
         socialNetworkMap.remove(network);
     }
 
+    public String getTag() {
+        return tag;
+    }
+
+    public void setTag(String tag) {
+        this.tag = tag;
+    }
+
+    public String getPhotoUrl() {
+        return photoUrl;
+    }
+
+    public void setPhotoUrl(String photoUrl) {
+        this.photoUrl = photoUrl;
+    }
+
+    public void setSocialNetworkMap(SocialNetworkMap socialNetworkMap) {
+        this.socialNetworkMap = socialNetworkMap;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -62,13 +84,15 @@ public class Contact implements Parcelable{
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        int[] ints = new int[2];
-        ints[0] = id;
-        ints[1] = contactId;
-        dest.writeIntArray(ints);
+        long[] longs = new long[2];
+        longs[0] = id;
+        longs[1] = contactId;
+        dest.writeLongArray(longs);
 
-        String[] strings = new String[1];
+        String[] strings = new String[3];
         strings[0] = name;
+        strings[1] = photoUrl;
+        strings[2] = tag;
         dest.writeStringArray(strings);
 
         dest.writeParcelable(socialNetworkMap, flags);
@@ -80,14 +104,16 @@ public class Contact implements Parcelable{
         @Override
         public Contact createFromParcel(Parcel source) {
             Contact contact = new Contact();
-            int[] ints = new int[2];
-            source.readIntArray(ints);
-            contact.id = ints[0];
-            contact.contactId = ints[1];
+            long[] longs = new long[2];
+            source.readLongArray(longs);
+            contact.id = longs[0];
+            contact.contactId = longs[1];
 
-            String[] strings = new String[1];
+            String[] strings = new String[3];
             source.readStringArray(strings);
             contact.name = strings[0];
+            contact.photoUrl = strings[1];
+            contact.tag = strings[2];
 
             contact.socialNetworkMap = source.readParcelable(SocialNetworkMap.class.getClassLoader());
 

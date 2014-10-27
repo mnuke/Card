@@ -20,6 +20,7 @@ public class ContactDbHelper extends SQLiteOpenHelper{
                     ContactContract.Contact._ID + " INTEGER PRIMARY KEY" + COMMA_SEP +
                     ContactContract.Contact.COLUMN_NAME_CONTACT_ID + INTEGER_TYPE + COMMA_SEP +
                     ContactContract.Contact.COLUMN_NAME_CONTACT_NAME + TEXT_TYPE + COMMA_SEP +
+                    ContactContract.Contact.COLUMN_NAME_TAG + TEXT_TYPE + COMMA_SEP +
                     ContactContract.Contact.COLUMN_NAME_CONTACT_PHOTO + TEXT_TYPE + COMMA_SEP +
                     ContactContract.Contact.COLUMN_NAME_CONTACT_SOCIAL_NETWORKS + TEXT_TYPE +
 
