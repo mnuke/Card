@@ -1,5 +1,6 @@
 package com.sixbynine.card.home;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -22,11 +23,32 @@ public class ContactsListFragment extends ActionBarFragment{
     private static final String ARG_CONTACTS = "arg-contacts";
     private static final String ARG_DISPLAY_CONTACTS = "arg-display-contacts";
 
+    private Callback mCallback;
     private ListView mListView;
     private ArrayList<Contact> mAllContacts;
     private ArrayList<Contact> mDisplayContacts;
     private ContactsArrayAdapter mAdapter;
     private FloatingActionButton mFloatingActionButton;
+
+    public interface Callback{
+        public void onActionButtonClicked();
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        if(activity instanceof Callback){
+            mCallback = (Callback) activity;
+        }else{
+            throw new IllegalStateException(activity.toString() + " must implement Callback interface");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mCallback = null;
+    }
 
     public static ContactsListFragment newInstance(ArrayList<Contact> contacts){
         ContactsListFragment frag = new ContactsListFragment();
@@ -59,6 +81,12 @@ public class ContactsListFragment extends ActionBarFragment{
 
         mFloatingActionButton = (FloatingActionButton) view.findViewById(R.id.fab);
         mFloatingActionButton.attachToListView(mListView);
+        mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mCallback != null) mCallback.onActionButtonClicked();
+            }
+        });
 
         return view;
     }

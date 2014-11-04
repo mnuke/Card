@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ImageView
+        android:id="@+id/network_image_view"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:padding="8dp"/>
+
+    <EditText
+        android:id="@+id/network_edit_text"
+        android:layout_toRightOf="@+id/network_image_view"
+        android:layout_toLeftOf="@+id/remove_button"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignBaseline="@+id/network_image_view"
+        android:paddingTop="8dp"/>
+
+    <ImageButton
+        android:id="@+id/remove_button"
+        android:layout_alignParentRight="true"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:scaleType="center"
+        android:background="@null"
+        android:src="@drawable/ic_content_remove_circle"/>
+
+</merge>

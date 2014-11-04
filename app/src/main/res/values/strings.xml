@@ -5,4 +5,20 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
 
+    <!-- SIMPLE WORDS -->
+    <string name="save">Save</string>
+
+    <!-- NEW CONTACT -->
+    <string name="name">Name</string>
+    <string name="phone">Phone Number</string>
+    <string name="social_networks_header">SOCIAL NETWORKS</string>
+
+    <!-- SOCIAL NETWORK NAMES -->
+    <string name="telephony">Phone</string>
+    <string name="facebook">Facebook</string>
+    <string name="linkedin">LinkedIn</string>
+    <string name="snapchat">SnapChat</string>
+    <string name="instagram">Instagram</string>
+    <string name="twitter">Twitter</string>
+
 </resources>

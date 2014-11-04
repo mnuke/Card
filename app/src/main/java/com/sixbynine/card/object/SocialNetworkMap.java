@@ -22,7 +22,7 @@ public class SocialNetworkMap extends HashMap<SocialNetwork, String> implements 
         try {
             for (Map.Entry<SocialNetwork, String> network : entrySet()) {
                 JSONObject obj = new JSONObject();
-                obj.put("key", network.getKey().getKey());
+                obj.put("key", network.getKey().getId());
                 obj.put("value", network.getValue());
                 arr.put(obj);
             }
@@ -42,9 +42,9 @@ public class SocialNetworkMap extends HashMap<SocialNetwork, String> implements 
             int len = jsonArray.length();
             for (int i = 0; i < len; i++) {
                 JSONObject obj = jsonArray.getJSONObject(i);
-                String key = obj.getString("key");
+                int id = obj.getInt("id");
                 String value = obj.getString("value");
-                map.put(SocialNetwork.fromKey(key), value);
+                map.put(SocialNetwork.fromId(id), value);
             }
         }catch(Exception e){
 
@@ -69,7 +69,7 @@ public class SocialNetworkMap extends HashMap<SocialNetwork, String> implements 
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(keySet().size());
         for(Map.Entry<SocialNetwork, String> network : entrySet()){
-            dest.writeString(network.getKey().getKey());
+            dest.writeInt(network.getKey().getId());
             dest.writeString(network.getValue());
         }
     }
@@ -80,9 +80,9 @@ public class SocialNetworkMap extends HashMap<SocialNetwork, String> implements 
             SocialNetworkMap map = new SocialNetworkMap();
             int numNetworks = source.readInt();
             for(int i = 0; i < numNetworks; i++){
-                String network = source.readString();
+                int network = source.readInt();
                 String value = source.readString();
-                map.put(SocialNetwork.fromKey(network), value);
+                map.put(SocialNetwork.fromId(network), value);
             }
             return map;
         }
