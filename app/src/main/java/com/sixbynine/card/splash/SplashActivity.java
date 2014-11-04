@@ -16,7 +16,6 @@ public class SplashActivity extends BaseCardActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.toolbar_frame);
-        setUpActionBar();
 
         mFragment = SplashFragment.newInstance();
         getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, mFragment).commit();

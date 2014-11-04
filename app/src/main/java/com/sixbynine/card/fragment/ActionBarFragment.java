@@ -12,7 +12,7 @@ public class ActionBarFragment extends Fragment{
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        if(activity instanceof ActionBarActivity == false){
+        if(!(activity instanceof ActionBarActivity)){
             throw new IllegalStateException(activity.toString() + " must be an ActionBarActivity");
         }
     }

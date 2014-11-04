@@ -4,6 +4,9 @@ import android.os.Bundle;
 
 import com.sixbynine.card.R;
 import com.sixbynine.card.activity.BaseCardActivity;
+import com.sixbynine.card.object.Contact;
+
+import java.util.ArrayList;
 
 /**
  * Created by steviekideckel on 10/26/14.
@@ -16,10 +19,11 @@ public class MainActivity extends BaseCardActivity{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.toolbar_frame);
-        setUpActionBar();
 
-        mContactsFragment = ContactsListFragment.newInstance();
+        mContactsFragment = ContactsListFragment.newInstance(new ArrayList<Contact>());
         getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, mContactsFragment).commit();
 
     }
+
+
 }
