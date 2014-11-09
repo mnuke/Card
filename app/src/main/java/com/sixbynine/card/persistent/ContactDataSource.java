@@ -133,7 +133,19 @@ public class ContactDataSource {
         return null;
     }
 
-
+    public Cursor queryAllContacts(){
+        SQLiteDatabase db = mHelper.getReadableDatabase();
+        Cursor cursor = db.query(
+                ContactContract.Contact.TABLE_NAME,
+                CONTACT_PROJECTION,
+                null,
+                null,
+                null,
+                null,
+                null
+        );
+        return cursor;
+    }
 
 
 

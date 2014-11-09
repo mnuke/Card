@@ -11,9 +11,7 @@ import android.widget.ListView;
 import com.melnykov.fab.FloatingActionButton;
 import com.sixbynine.card.R;
 import com.sixbynine.card.fragment.ActionBarFragment;
-import com.sixbynine.card.object.Contact;
-
-import java.util.ArrayList;
+import com.sixbynine.card.persistent.ContactDataSource;
 
 /**
  * Created by steviekideckel on 10/26/14.
@@ -25,10 +23,9 @@ public class ContactsListFragment extends ActionBarFragment{
 
     private Callback mCallback;
     private ListView mListView;
-    private ArrayList<Contact> mAllContacts;
-    private ArrayList<Contact> mDisplayContacts;
-    private ContactsArrayAdapter mAdapter;
+    private ContactsCursorAdapter mAdapter;
     private FloatingActionButton mFloatingActionButton;
+    private ContactDataSource mDataSource;
 
     public interface Callback{
         public void onActionButtonClicked();
@@ -50,24 +47,14 @@ public class ContactsListFragment extends ActionBarFragment{
         mCallback = null;
     }
 
-    public static ContactsListFragment newInstance(ArrayList<Contact> contacts){
-        ContactsListFragment frag = new ContactsListFragment();
-        Bundle b = new Bundle();
-        b.putParcelableArrayList(ARG_CONTACTS, contacts);
-        frag.setArguments(b);
-        return frag;
+    public static ContactsListFragment newInstance(){
+        return new ContactsListFragment();
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(savedInstanceState == null){
-            mAllContacts = getArguments().getParcelableArrayList(ARG_CONTACTS);
-            mDisplayContacts = new ArrayList<Contact>(mAllContacts);
-        }else{
-            mAllContacts = savedInstanceState.getParcelableArrayList(ARG_CONTACTS);
-            mDisplayContacts = savedInstanceState.getParcelableArrayList(ARG_DISPLAY_CONTACTS);
-        }
+        mDataSource = new ContactDataSource();
     }
 
     @Override
@@ -76,7 +63,7 @@ public class ContactsListFragment extends ActionBarFragment{
 
         mListView = (ListView) view.findViewById(R.id.list_view);
 
-        mAdapter = new ContactsArrayAdapter(getActivity(), mDisplayContacts);
+        mAdapter = new ContactsCursorAdapter(getActivity(), mDataSource.queryAllContacts(), 0);
         mListView.setAdapter(mAdapter);
 
         mFloatingActionButton = (FloatingActionButton) view.findViewById(R.id.fab);
@@ -91,12 +78,11 @@ public class ContactsListFragment extends ActionBarFragment{
         return view;
     }
 
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putParcelableArrayList(ARG_CONTACTS, mAllContacts);
-        outState.putParcelableArrayList(ARG_DISPLAY_CONTACTS, mDisplayContacts);
+    public void refreshContactList(){
+        mAdapter.changeCursor(mDataSource.queryAllContacts());
     }
+
+
 
 
 }

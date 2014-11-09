@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
-    android:clickable="true"
-    android:layout_margin="32dp">
+    android:clickable="true">
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/save_button">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -24,73 +23,73 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:inputType="textCapWords"
-                android:hint="@string/name" />
+                android:hint="@string/name"
+                android:inputType="textCapWords" />
 
             <EditText
                 android:id="@+id/phone_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="phone"
                 android:layout_marginBottom="10dp"
-                android:hint="@string/phone" />
+                android:hint="@string/phone"
+                android:inputType="phone" />
 
             <RelativeLayout
-                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="12sp"
-                    android:paddingTop="8dp"
-                    android:paddingBottom="8dp"
-                    android:text="@string/social_networks_header"
                     android:layout_centerVertical="true"
-                    android:layout_toLeftOf="@+id/add_button"/>
+                    android:layout_toLeftOf="@+id/add_button"
+                    android:paddingBottom="8dp"
+                    android:paddingTop="8dp"
+                    android:text="@string/social_networks_header"
+                    android:textSize="12sp" />
 
                 <ImageButton
                     android:id="@+id/add_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@null"
-                    android:src="@drawable/ic_content_add_box_green"
+                    android:layout_alignParentRight="true"
                     android:layout_marginRight="4dp"
-                    android:layout_alignParentRight="true"/>
+                    android:background="@null"
+                    android:src="@drawable/ic_content_add_box_green" />
 
-                </RelativeLayout>
+            </RelativeLayout>
 
             <View
-                android:background="#77aaaaaa"
                 android:layout_width="match_parent"
-                android:layout_height="1dp"/>
+                android:layout_height="1dp"
+                android:background="#77aaaaaa" />
 
             <LinearLayout
                 android:id="@+id/social_network_container"
-                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
                 <com.sixbynine.card.view.SocialNetworkEntryView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:network="facebook"/>
+                    app:network="facebook" />
 
                 <com.sixbynine.card.view.SocialNetworkEntryView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:network="linkedin"/>
+                    app:network="linkedin" />
 
                 <com.sixbynine.card.view.SocialNetworkEntryView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:network="twitter"/>
+                    app:network="twitter" />
 
                 <com.sixbynine.card.view.SocialNetworkEntryView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:network="instagram"/>
+                    app:network="instagram" />
 
             </LinearLayout>
 
@@ -98,13 +97,4 @@
         </LinearLayout>
     </ScrollView>
 
-    <Button
-        android:id="@+id/save_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:textColor="@android:color/white"
-        android:text="@string/save"
-        android:textSize="18sp"
-        android:background="?attr/colorAccent"/>
 </RelativeLayout>

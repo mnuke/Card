@@ -3,6 +3,8 @@ package com.sixbynine.card.view;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.ColorDrawable;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,12 +32,31 @@ public class SocialNetworkEntryView extends RelativeLayout {
         public void onRemove(SocialNetworkEntryView view);
     }
 
+    public SocialNetworkEntryView(Context context){
+        super(context);
+
+        LayoutInflater.from(context).inflate(R.layout.view_social_network_entry, this);
+        mImageView = (ImageView) findViewById(R.id.network_image_view);
+        mEditText = (EditText) findViewById(R.id.network_edit_text);
+        mEditText.addTextChangedListener(mTextWatcher);
+        mRemoveButton = (ImageButton) findViewById(R.id.remove_button);
+        mRemoveButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mListener != null){
+                    mListener.onRemove(SocialNetworkEntryView.this);
+                }
+            }
+        });
+    }
+
     public SocialNetworkEntryView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
         LayoutInflater.from(context).inflate(R.layout.view_social_network_entry, this);
         mImageView = (ImageView) findViewById(R.id.network_image_view);
         mEditText = (EditText) findViewById(R.id.network_edit_text);
+        mEditText.addTextChangedListener(mTextWatcher);
         mRemoveButton = (ImageButton) findViewById(R.id.remove_button);
         mRemoveButton.setOnClickListener(new OnClickListener() {
             @Override
@@ -86,13 +107,37 @@ public class SocialNetworkEntryView extends RelativeLayout {
         return mNetwork;
     }
 
+    public boolean hasValue(){
+        String text = mEditText.getText().toString();
+        return !(text == null || text.trim().isEmpty() || text.trim().equals("@"));
+    }
+
     public String getText(){
         return mEditText.getText().toString();
     }
 
-    public void setListener(OnRemoveListener listener){
+    public void setOnRemoveListener(OnRemoveListener listener){
         mListener = listener;
     }
+
+    private TextWatcher mTextWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            if(mEditText.getText().length() == 0 && mNetwork.hasAtInHandle()){
+                mEditText.setText("@");
+            }
+        }
+    };
 
 
 }

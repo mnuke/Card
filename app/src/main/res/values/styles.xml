@@ -5,12 +5,34 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="actionMenuTextColor">@android:color/white</item>
+        <item name="actionBarStyle">@style/AppBaseTheme.ActionBarStyle</item>
+        <item name="android:actionMenuTextColor">@android:color/white</item>
+        <item name="android:actionBarStyle">@style/AppBaseTheme.ActionBarStyle</item>
+
     </style>
 
     <style name="AppTheme" parent="AppBaseTheme">
 
     </style>
 
+    <style name="AppBaseTheme.ActionBarStyle" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="titleTextStyle">@style/ActionBarTitleText</item>
+    </style>
+
+    <style name="ActionBarTitleText" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
     <!-- NEW CONTACT -->
+    <style name="MyCustomTheme" parent="@android:style/Theme.Panel">
+        <item name="android:windowAnimationStyle">@style/MyAnimation.Window</item>
+    </style>
+
+    <style name="MyAnimation.Window" parent="@android:style/Animation.Activity">
+        <item name="android:windowEnterAnimation">@anim/expand_in_from_bottom_right</item>
+        <item name="android:windowExitAnimation">@anim/shrink_out_to_bottom_right</item>
+    </style>
 
 </resources>

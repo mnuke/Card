@@ -1,22 +1,21 @@
 package com.sixbynine.card.home;
 
 import android.content.Context;
+import android.database.Cursor;
+import android.support.v4.widget.CursorAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.pkmmte.view.CircularImageView;
 import com.sixbynine.card.R;
 import com.sixbynine.card.object.Contact;
 
-import java.util.ArrayList;
-
 /**
  * Created by steviekideckel on 10/26/14.
  */
-public class ContactsArrayAdapter extends ArrayAdapter<Contact> {
+public class ContactsCursorAdapter extends CursorAdapter {
 
     private static class ViewHolder{
         public CircularImageView mCircularImageView;
@@ -29,36 +28,25 @@ public class ContactsArrayAdapter extends ArrayAdapter<Contact> {
         }
     }
 
-    private ArrayList<Contact> mContacts;
-
-    public ContactsArrayAdapter(Context context, ArrayList<Contact> contacts) {
-        super(context, R.layout.item_contact, contacts);
-        mContacts = contacts;
-
+    public ContactsCursorAdapter(Context context, Cursor c, int flags) {
+        super(context, c, flags);
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        if(convertView == null){
-            convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_contact, null);
-            convertView.setTag(new ViewHolder(convertView));
-        }
+    public View newView(Context context, Cursor cursor, ViewGroup viewGroup) {
+        View view = LayoutInflater.from(context).inflate(R.layout.item_contact, viewGroup, false);
+        view.setTag(new ViewHolder(view));
+        return view;
+    }
 
-        Contact contact = mContacts.get(position);
-        ViewHolder viewHolder = (ViewHolder) convertView.getTag();
+    @Override
+    public void bindView(View view, Context context, Cursor cursor) {
+        Contact contact = Contact.fromCursor(cursor);
+        ViewHolder viewHolder = (ViewHolder) view.getTag();
         viewHolder.mHeader.setText(contact.getName());
         viewHolder.mSubHeader.setText(contact.getTag());
-
-        return convertView;
     }
 
-    @Override
-    public int getCount() {
-        if(mContacts == null){
-            return 0;
-        }else{
-            return mContacts.size();
-        }
-    }
+
 
 }

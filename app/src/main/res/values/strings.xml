@@ -12,6 +12,7 @@
     <string name="name">Name</string>
     <string name="phone">Phone Number</string>
     <string name="social_networks_header">SOCIAL NETWORKS</string>
+    <string name="new_contact">New Contact</string>
 
     <!-- SOCIAL NETWORK NAMES -->
     <string name="telephony">Phone</string>
@@ -20,5 +21,9 @@
     <string name="snapchat">SnapChat</string>
     <string name="instagram">Instagram</string>
     <string name="twitter">Twitter</string>
+
+    <!-- ERROR MESSAGES -->
+    <string name="please_enter_name">Please enter a name</string>
+    <string name="error_saving_contact">Error saving contact</string>
 
 </resources>

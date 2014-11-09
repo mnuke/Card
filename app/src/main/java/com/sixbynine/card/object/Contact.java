@@ -1,9 +1,11 @@
 package com.sixbynine.card.object;
 
+import android.database.Cursor;
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.sixbynine.card.model.SocialNetwork;
+import com.sixbynine.card.persistent.ContactContract;
 
 /**
  * Created by steviekideckel on 10/26/14.
@@ -11,7 +13,7 @@ import com.sixbynine.card.model.SocialNetwork;
 public class Contact implements Parcelable{
 
     private long id; //Database id
-    private long contactId;
+    private long contactId; //server id
     private String name;
     private String tag;
     private String photoUrl;
@@ -127,4 +129,35 @@ public class Contact implements Parcelable{
             return new Contact[size];
         }
     };
+
+
+    private static int sIdIndex = -1;
+    private static int sContactIdIndex = -1;
+    private static int sNameIndex = -1;
+    private static int sTagIndex = -1;
+    private static int sPhotoIndex = -1;
+    private static int sSocialIndex = -1;
+
+    public static Contact fromCursor(Cursor cursor){
+        if(cursor == null){
+            return null;
+        }else{
+            if(sIdIndex == -1){
+                sIdIndex = cursor.getColumnIndexOrThrow(ContactContract.Contact._ID);
+                sContactIdIndex = cursor.getColumnIndexOrThrow(ContactContract.Contact.COLUMN_NAME_CONTACT_ID);
+                sNameIndex = cursor.getColumnIndexOrThrow(ContactContract.Contact.COLUMN_NAME_CONTACT_NAME);
+                sTagIndex = cursor.getColumnIndexOrThrow(ContactContract.Contact.COLUMN_NAME_TAG);
+                sPhotoIndex = cursor.getColumnIndexOrThrow(ContactContract.Contact.COLUMN_NAME_CONTACT_PHOTO);
+                sSocialIndex = cursor.getColumnIndexOrThrow(ContactContract.Contact.COLUMN_NAME_CONTACT_SOCIAL_NETWORKS);
+            }
+            Contact contact = new Contact();
+            contact.setId(cursor.getLong(sIdIndex));
+            contact.setContactId(cursor.getLong(sContactIdIndex));
+            contact.setName(cursor.getString(sNameIndex));
+            contact.setTag(cursor.getString(sTagIndex));
+            contact.setPhotoUrl(cursor.getString(sPhotoIndex));
+            contact.setSocialNetworkMap(SocialNetworkMap.fromJsonArray(cursor.getString(sSocialIndex)));
+            return contact;
+        }
+    }
 }
