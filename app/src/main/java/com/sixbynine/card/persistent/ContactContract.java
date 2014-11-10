@@ -9,7 +9,7 @@ public final class ContactContract {
 
     public ContactContract(){}
 
-    public static abstract class Contact implements BaseColumns{
+    public static abstract class ContactDb implements BaseColumns{
         public static final String TABLE_NAME="contacts";
         public static final String COLUMN_NAME_CONTACT_ID="contact_id";
         public static final String COLUMN_NAME_TAG = "contact_tag";

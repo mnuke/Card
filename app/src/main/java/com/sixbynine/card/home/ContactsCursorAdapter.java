@@ -47,6 +47,4 @@ public class ContactsCursorAdapter extends CursorAdapter {
         viewHolder.mSubHeader.setText(contact.getTag());
     }
 
-
-
 }

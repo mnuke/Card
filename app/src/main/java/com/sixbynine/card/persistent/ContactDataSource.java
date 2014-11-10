@@ -18,12 +18,12 @@ public class ContactDataSource {
     private ContactDbHelper mHelper;
 
     private static final String[] CONTACT_PROJECTION = {
-            ContactContract.Contact._ID,
-            ContactContract.Contact.COLUMN_NAME_CONTACT_ID,
-            ContactContract.Contact.COLUMN_NAME_CONTACT_NAME,
-            ContactContract.Contact.COLUMN_NAME_TAG,
-            ContactContract.Contact.COLUMN_NAME_CONTACT_PHOTO,
-            ContactContract.Contact.COLUMN_NAME_CONTACT_SOCIAL_NETWORKS};
+            ContactContract.ContactDb._ID,
+            ContactContract.ContactDb.COLUMN_NAME_CONTACT_ID,
+            ContactContract.ContactDb.COLUMN_NAME_CONTACT_NAME,
+            ContactContract.ContactDb.COLUMN_NAME_TAG,
+            ContactContract.ContactDb.COLUMN_NAME_CONTACT_PHOTO,
+            ContactContract.ContactDb.COLUMN_NAME_CONTACT_SOCIAL_NETWORKS};
 
 
 
@@ -35,14 +35,14 @@ public class ContactDataSource {
         SQLiteDatabase db = mHelper.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(ContactContract.Contact.COLUMN_NAME_CONTACT_ID, contact.getContactId());
-        values.put(ContactContract.Contact.COLUMN_NAME_CONTACT_NAME, contact.getName());
-        values.put(ContactContract.Contact.COLUMN_NAME_TAG, contact.getTag());
-        values.put(ContactContract.Contact.COLUMN_NAME_CONTACT_PHOTO, contact.getPhotoUrl());
-        values.put(ContactContract.Contact.COLUMN_NAME_CONTACT_SOCIAL_NETWORKS, contact.getSocialNetworkMap().toJsonArrayString());
+        values.put(ContactContract.ContactDb.COLUMN_NAME_CONTACT_ID, contact.getContactId());
+        values.put(ContactContract.ContactDb.COLUMN_NAME_CONTACT_NAME, contact.getName());
+        values.put(ContactContract.ContactDb.COLUMN_NAME_TAG, contact.getTag());
+        values.put(ContactContract.ContactDb.COLUMN_NAME_CONTACT_PHOTO, contact.getPhotoUrl());
+        values.put(ContactContract.ContactDb.COLUMN_NAME_CONTACT_SOCIAL_NETWORKS, contact.getSocialNetworkMap().toJsonArrayString());
 
         return db.insert(
-                ContactContract.Contact.TABLE_NAME,
+                ContactContract.ContactDb.TABLE_NAME,
                 null,
                 values);
     }
@@ -50,9 +50,9 @@ public class ContactDataSource {
     public Contact getContactById(int id){
         SQLiteDatabase db = mHelper.getReadableDatabase();
         Cursor c = db.query(
-                ContactContract.Contact.TABLE_NAME,
+                ContactContract.ContactDb.TABLE_NAME,
                 CONTACT_PROJECTION,
-                ContactContract.Contact._ID + "=?",
+                ContactContract.ContactDb._ID + "=?",
                 new String[]{String.valueOf(id)},
                 null,
                 null,
@@ -64,7 +64,7 @@ public class ContactDataSource {
     public List<Contact> getAllContacts(){
         SQLiteDatabase db = mHelper.getReadableDatabase();
         Cursor cursor = db.query(
-                ContactContract.Contact.TABLE_NAME,
+                ContactContract.ContactDb.TABLE_NAME,
                 CONTACT_PROJECTION,
                 null,
                 null,
@@ -72,12 +72,12 @@ public class ContactDataSource {
                 null,
                 null
         );
-        int idIndex = cursor.getColumnIndexOrThrow(ContactContract.Contact._ID);
-        int contactIdIndex = cursor.getColumnIndexOrThrow(ContactContract.Contact.COLUMN_NAME_CONTACT_ID);
-        int nameIndex = cursor.getColumnIndexOrThrow(ContactContract.Contact.COLUMN_NAME_CONTACT_NAME);
-        int tagIndex = cursor.getColumnIndexOrThrow(ContactContract.Contact.COLUMN_NAME_TAG);
-        int photoIndex = cursor.getColumnIndexOrThrow(ContactContract.Contact.COLUMN_NAME_CONTACT_PHOTO);
-        int networksIndex = cursor.getColumnIndexOrThrow(ContactContract.Contact.COLUMN_NAME_CONTACT_SOCIAL_NETWORKS);
+        int idIndex = cursor.getColumnIndexOrThrow(ContactContract.ContactDb._ID);
+        int contactIdIndex = cursor.getColumnIndexOrThrow(ContactContract.ContactDb.COLUMN_NAME_CONTACT_ID);
+        int nameIndex = cursor.getColumnIndexOrThrow(ContactContract.ContactDb.COLUMN_NAME_CONTACT_NAME);
+        int tagIndex = cursor.getColumnIndexOrThrow(ContactContract.ContactDb.COLUMN_NAME_TAG);
+        int photoIndex = cursor.getColumnIndexOrThrow(ContactContract.ContactDb.COLUMN_NAME_CONTACT_PHOTO);
+        int networksIndex = cursor.getColumnIndexOrThrow(ContactContract.ContactDb.COLUMN_NAME_CONTACT_SOCIAL_NETWORKS);
 
         List<Contact> contacts = new ArrayList<Contact>(cursor.getCount());
 
@@ -104,22 +104,22 @@ public class ContactDataSource {
     public static Contact cursorToContact(Cursor cursor){
         if(cursor.moveToNext()){
             long itemId = cursor.getLong(
-                    cursor.getColumnIndexOrThrow(ContactContract.Contact._ID)
+                    cursor.getColumnIndexOrThrow(ContactContract.ContactDb._ID)
             );
             long itemContactId = cursor.getLong(
-                    cursor.getColumnIndexOrThrow(ContactContract.Contact.COLUMN_NAME_CONTACT_ID)
+                    cursor.getColumnIndexOrThrow(ContactContract.ContactDb.COLUMN_NAME_CONTACT_ID)
             );
             String itemName = cursor.getString(
-                    cursor.getColumnIndexOrThrow(ContactContract.Contact.COLUMN_NAME_CONTACT_NAME)
+                    cursor.getColumnIndexOrThrow(ContactContract.ContactDb.COLUMN_NAME_CONTACT_NAME)
             );
             String itemTag = cursor.getString(
-                    cursor.getColumnIndexOrThrow(ContactContract.Contact.COLUMN_NAME_TAG)
+                    cursor.getColumnIndexOrThrow(ContactContract.ContactDb.COLUMN_NAME_TAG)
             );
             String itemPhoto = cursor.getString(
-                    cursor.getColumnIndexOrThrow(ContactContract.Contact.COLUMN_NAME_CONTACT_PHOTO)
+                    cursor.getColumnIndexOrThrow(ContactContract.ContactDb.COLUMN_NAME_CONTACT_PHOTO)
             );
             String itemNetworks = cursor.getString(
-                    cursor.getColumnIndexOrThrow(ContactContract.Contact.COLUMN_NAME_CONTACT_SOCIAL_NETWORKS)
+                    cursor.getColumnIndexOrThrow(ContactContract.ContactDb.COLUMN_NAME_CONTACT_SOCIAL_NETWORKS)
             );
             Contact contact = new Contact();
             contact.setId(itemId);
@@ -136,7 +136,7 @@ public class ContactDataSource {
     public Cursor queryAllContacts(){
         SQLiteDatabase db = mHelper.getReadableDatabase();
         Cursor cursor = db.query(
-                ContactContract.Contact.TABLE_NAME,
+                ContactContract.ContactDb.TABLE_NAME,
                 CONTACT_PROJECTION,
                 null,
                 null,

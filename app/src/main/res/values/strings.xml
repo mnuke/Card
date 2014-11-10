@@ -3,10 +3,15 @@
 
     <string name="app_name">Card</string>
     <string name="hello_world">Hello world!</string>
+
+    <!-- MENU ITEMS -->
     <string name="action_settings">Settings</string>
+    <string name="action_import">Import Contacts</string>
 
     <!-- SIMPLE WORDS -->
     <string name="save">Save</string>
+    <string name="choose">Choose</string>
+    <string name="cancel">Cancel</string>
 
     <!-- NEW CONTACT -->
     <string name="name">Name</string>
@@ -22,8 +27,12 @@
     <string name="instagram">Instagram</string>
     <string name="twitter">Twitter</string>
 
+    <!-- SELECTING A NETWORK -->
+    <string name="select_a_network">Select Network</string>
+
     <!-- ERROR MESSAGES -->
     <string name="please_enter_name">Please enter a name</string>
     <string name="error_saving_contact">Error saving contact</string>
+    <string name="please_select_network">Please select a network</string>
 
 </resources>

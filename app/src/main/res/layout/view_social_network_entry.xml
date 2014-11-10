@@ -2,16 +2,18 @@
 
 <merge xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <ImageView
+    <ImageButton
         android:id="@+id/network_image_view"
         android:layout_width="48dp"
         android:layout_height="48dp"
+        android:background="@null"
         android:padding="8dp"/>
 
     <EditText
         android:id="@+id/network_edit_text"
         android:layout_toRightOf="@+id/network_image_view"
         android:layout_toLeftOf="@+id/remove_button"
+        android:layout_marginLeft="@dimen/entry_view_left_margin"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignBaseline="@+id/network_image_view"

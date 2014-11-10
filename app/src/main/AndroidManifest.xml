@@ -13,13 +13,19 @@
             android:label="@string/app_name" >
 
         </activity>
-        <activity android:name=".home.MainActivity">
+        <activity android:name=".home.MainActivity"
+            android:theme="@style/AppTheme.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".newcontact.NewContactActivity"
+            android:theme="@style/AppTheme.NewContactActivity"/>
+
+        <activity android:name=".display.ContactDisplayActivity"/>
     </application>
 
 </manifest>

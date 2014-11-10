@@ -1,23 +1,22 @@
 package com.sixbynine.card.home;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Toast;
+import android.view.Menu;
 
 import com.sixbynine.card.R;
 import com.sixbynine.card.activity.BaseCardActivity;
-import com.sixbynine.card.manager.DatabaseManager;
-import com.sixbynine.card.manager.UpdateEvent;
-import com.sixbynine.card.manager.UpdateListener;
+import com.sixbynine.card.display.ContactDisplayActivity;
+import com.sixbynine.card.newcontact.NewContactActivity;
 import com.sixbynine.card.object.Contact;
-import com.sixbynine.card.util.Logger;
 
 /**
  * Created by steviekideckel on 10/26/14.
  */
-public class MainActivity extends BaseCardActivity implements UpdateListener, ContactsListFragment.Callback, NewContactFragment.Callback{
+public class MainActivity extends BaseCardActivity implements ContactsListFragment.Callback{
 
     private ContactsListFragment mContactsFragment;
-    private NewContactFragment mNewContactFragment;
+    private static final int NEW_CONTACT = 1;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -29,58 +28,40 @@ public class MainActivity extends BaseCardActivity implements UpdateListener, Co
                 .replace(R.id.bottom_frame, mContactsFragment)
                 .commit();
 
+
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        DatabaseManager.getInstance().subscribe(this);
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        DatabaseManager.getInstance().unSubscribe(this);
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.activity_main, menu);
+        return true;
     }
 
     @Override
     public void onActionButtonClicked() {
-        if(mNewContactFragment == null){
-            mNewContactFragment = NewContactFragment.newInstance();
-        }else if(mNewContactFragment.isAdded()){
-            return;
-        }
-        getSupportFragmentManager().beginTransaction().replace(R.id.top_frame, mNewContactFragment).commit();
+        Intent intent = new Intent(this, NewContactActivity.class);
+        startActivityForResult(intent, NEW_CONTACT);
     }
 
     @Override
     public void onBackPressed() {
-        if(mNewContactFragment.isAdded()){
-            getSupportFragmentManager().beginTransaction().remove(mNewContactFragment).commit();
+        super.onBackPressed();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == NEW_CONTACT && resultCode == RESULT_OK){
+            mContactsFragment.refreshContactList();
         }else{
-            super.onBackPressed();
+            super.onActivityResult(requestCode, resultCode, data);
         }
+
     }
 
     @Override
-    public void onContactSaved(Contact contact) {
-        DatabaseManager.getInstance().saveContact(contact);
-        if(mNewContactFragment != null && mNewContactFragment.isAdded()) {
-            getSupportFragmentManager().beginTransaction().remove(mNewContactFragment).commit();
-        }
-    }
-
-    @Override
-    public void update(UpdateEvent e, Object... data) {
-        switch(e){
-            case CONTACT_SAVED:
-                mContactsFragment.refreshContactList();
-                break;
-            case CONTACT_ERROR_SAVING:
-                Toast.makeText(this, R.string.error_saving_contact, Toast.LENGTH_SHORT).show();
-                Logger.e("Error saving contact " +data[0]);
-                break;
-
-        }
+    public void onContactClicked(Contact contact) {
+        Intent intent = new Intent(this, ContactDisplayActivity.class);
+        intent.putExtra("contact", contact);
+        startActivity(intent);
     }
 }

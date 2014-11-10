@@ -2,12 +2,14 @@ package com.sixbynine.card.object;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.v4.util.Pair;
 
 import com.sixbynine.card.model.SocialNetwork;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -92,4 +94,12 @@ public class SocialNetworkMap extends HashMap<SocialNetwork, String> implements 
             return new SocialNetworkMap[size];
         }
     };
+
+    public ArrayList<Pair<SocialNetwork, String>> toPairArrayList(){
+        ArrayList<Pair<SocialNetwork, String>> list = new ArrayList<Pair<SocialNetwork, String>>(size());
+        for(Map.Entry<SocialNetwork, String> entry : entrySet()){
+            list.add(new Pair<SocialNetwork, String>(entry.getKey(), entry.getValue()));
+        }
+        return list;
+    }
 }

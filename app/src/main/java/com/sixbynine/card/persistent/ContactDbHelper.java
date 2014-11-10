@@ -16,18 +16,18 @@ public class ContactDbHelper extends SQLiteOpenHelper{
     private static final String INTEGER_TYPE = " INTEGER";
     private static final String COMMA_SEP = ",";
     private static final String SQL_CREATE_ENTRIES =
-            "CREATE TABLE " + ContactContract.Contact.TABLE_NAME + " (" +
-                    ContactContract.Contact._ID + " INTEGER PRIMARY KEY" + COMMA_SEP +
-                    ContactContract.Contact.COLUMN_NAME_CONTACT_ID + INTEGER_TYPE + COMMA_SEP +
-                    ContactContract.Contact.COLUMN_NAME_CONTACT_NAME + TEXT_TYPE + COMMA_SEP +
-                    ContactContract.Contact.COLUMN_NAME_TAG + TEXT_TYPE + COMMA_SEP +
-                    ContactContract.Contact.COLUMN_NAME_CONTACT_PHOTO + TEXT_TYPE + COMMA_SEP +
-                    ContactContract.Contact.COLUMN_NAME_CONTACT_SOCIAL_NETWORKS + TEXT_TYPE +
+            "CREATE TABLE " + ContactContract.ContactDb.TABLE_NAME + " (" +
+                    ContactContract.ContactDb._ID + " INTEGER PRIMARY KEY" + COMMA_SEP +
+                    ContactContract.ContactDb.COLUMN_NAME_CONTACT_ID + INTEGER_TYPE + COMMA_SEP +
+                    ContactContract.ContactDb.COLUMN_NAME_CONTACT_NAME + TEXT_TYPE + COMMA_SEP +
+                    ContactContract.ContactDb.COLUMN_NAME_TAG + TEXT_TYPE + COMMA_SEP +
+                    ContactContract.ContactDb.COLUMN_NAME_CONTACT_PHOTO + TEXT_TYPE + COMMA_SEP +
+                    ContactContract.ContactDb.COLUMN_NAME_CONTACT_SOCIAL_NETWORKS + TEXT_TYPE +
 
             " )";
 
     private static final String SQL_DELETE_ENTRIES =
-            "DROP TABLE IF EXISTS " + ContactContract.Contact.TABLE_NAME;
+            "DROP TABLE IF EXISTS " + ContactContract.ContactDb.TABLE_NAME;
 
     public ContactDbHelper(Context context){
         super(context, DATABASE_NAME, null, DATABASE_VERSION);

@@ -1,4 +1,4 @@
-package com.sixbynine.card.home;
+package com.sixbynine.card.newcontact;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -7,6 +7,7 @@ import android.support.v7.app.ActionBar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -17,7 +18,8 @@ import com.sixbynine.card.R;
 import com.sixbynine.card.fragment.ActionBarFragment;
 import com.sixbynine.card.model.SocialNetwork;
 import com.sixbynine.card.object.Contact;
-import com.sixbynine.card.view.SocialNetworkEntryView;
+import com.sixbynine.card.ui.dialog.SocialNetworkPickerDialog;
+import com.sixbynine.card.ui.view.SocialNetworkEntryView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +46,22 @@ public class NewContactFragment extends ActionBarFragment{
         public void onRemove(SocialNetworkEntryView view) {
             removeSocialNetwork(view);
         }
+
+        @Override
+        public void onNetworkTapped(final SocialNetworkEntryView view) {
+            SocialNetworkPickerDialog dialog = SocialNetworkPickerDialog.newInstance(new SocialNetworkPickerDialog.SocialNetworkPickerDialogListener() {
+                @Override
+                public void onCancel() {
+
+                }
+
+                @Override
+                public void onSocialNetworkPicked(SocialNetwork network) {
+                    view.setNetwork(network);
+                }
+            });
+            dialog.show(getChildFragmentManager(), "picker");
+        }
     };
 
     @Override
@@ -66,15 +84,26 @@ public class NewContactFragment extends ActionBarFragment{
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         final ActionBar actionBar = getActionBar();
         if(actionBar != null){
-            actionBar.setIcon(R.drawable.ic_action_navigation_close);
-            actionBar.setTitle(R.string.new_contact);
-            actionBar.setDisplayShowHomeEnabled(true);
             actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setTitle(R.string.new_contact);
             menu.clear();
             inflater.inflate(R.menu.menu_new_contact, menu);
         }
         super.onCreateOptionsMenu(menu, inflater);
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()){
+            case android.R.id.home:
+                getActivity().onBackPressed();
+                return true;
+            case R.id.action_save:
+                saveAndCallback();
+                return true;
+        }
+        return false;
     }
 
     @Override
@@ -107,10 +136,25 @@ public class NewContactFragment extends ActionBarFragment{
     }
 
     private void addSocialNetwork(){
-        SocialNetworkEntryView entryView = new SocialNetworkEntryView(getActivity());
-        mSocialNetworkEntryViews.add(entryView);
-        entryView.setOnRemoveListener(mOnRemoveListener);
-        mSocialNetworkContainer.addView(entryView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        SocialNetworkPickerDialog dialog = SocialNetworkPickerDialog.newInstance(new SocialNetworkPickerDialog.SocialNetworkPickerDialogListener() {
+            @Override
+            public void onCancel() {
+
+            }
+
+            @Override
+            public void onSocialNetworkPicked(SocialNetwork network) {
+                SocialNetworkEntryView entryView = new SocialNetworkEntryView(getActivity());
+                entryView.setNetwork(network);
+                mSocialNetworkEntryViews.add(entryView);
+                entryView.setOnRemoveListener(mOnRemoveListener);
+                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                layoutParams.topMargin = getResources().getDimensionPixelOffset(R.dimen.social_margin_bottom);
+                mSocialNetworkContainer.addView(entryView, layoutParams);
+            }
+        });
+        dialog.show(getChildFragmentManager(), "picker");
+
     }
 
     private void removeSocialNetwork(SocialNetworkEntryView view){

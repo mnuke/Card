@@ -16,6 +16,19 @@
 
     </style>
 
+    <style name="AppTheme.MainActivity" parent="AppTheme">
+        <item name="displayOptions">showHome|useLogo</item>
+        <item name="homeAsUpIndicator">@null</item>
+        <item name="android:homeAsUpIndicator">@null</item>
+    </style>
+
+    <style name="AppTheme.NewContactActivity" parent="AppTheme">
+        <item name="homeAsUpIndicator">@drawable/ic_action_navigation_close</item>
+        <item name="android:homeAsUpIndicator">@drawable/ic_action_navigation_close</item>
+    </style>
+
+
+
     <style name="AppBaseTheme.ActionBarStyle" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">
         <item name="android:textColor">@android:color/white</item>
         <item name="titleTextStyle">@style/ActionBarTitleText</item>

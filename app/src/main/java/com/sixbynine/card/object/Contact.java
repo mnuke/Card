@@ -143,12 +143,12 @@ public class Contact implements Parcelable{
             return null;
         }else{
             if(sIdIndex == -1){
-                sIdIndex = cursor.getColumnIndexOrThrow(ContactContract.Contact._ID);
-                sContactIdIndex = cursor.getColumnIndexOrThrow(ContactContract.Contact.COLUMN_NAME_CONTACT_ID);
-                sNameIndex = cursor.getColumnIndexOrThrow(ContactContract.Contact.COLUMN_NAME_CONTACT_NAME);
-                sTagIndex = cursor.getColumnIndexOrThrow(ContactContract.Contact.COLUMN_NAME_TAG);
-                sPhotoIndex = cursor.getColumnIndexOrThrow(ContactContract.Contact.COLUMN_NAME_CONTACT_PHOTO);
-                sSocialIndex = cursor.getColumnIndexOrThrow(ContactContract.Contact.COLUMN_NAME_CONTACT_SOCIAL_NETWORKS);
+                sIdIndex = cursor.getColumnIndexOrThrow(ContactContract.ContactDb._ID);
+                sContactIdIndex = cursor.getColumnIndexOrThrow(ContactContract.ContactDb.COLUMN_NAME_CONTACT_ID);
+                sNameIndex = cursor.getColumnIndexOrThrow(ContactContract.ContactDb.COLUMN_NAME_CONTACT_NAME);
+                sTagIndex = cursor.getColumnIndexOrThrow(ContactContract.ContactDb.COLUMN_NAME_TAG);
+                sPhotoIndex = cursor.getColumnIndexOrThrow(ContactContract.ContactDb.COLUMN_NAME_CONTACT_PHOTO);
+                sSocialIndex = cursor.getColumnIndexOrThrow(ContactContract.ContactDb.COLUMN_NAME_CONTACT_SOCIAL_NETWORKS);
             }
             Contact contact = new Contact();
             contact.setId(cursor.getLong(sIdIndex));

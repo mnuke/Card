@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <declare-styleable name="SocialNetworkEntryView">
+    <declare-styleable name="SocialNetworkDisplayView">
         <attr name="network" format="enum">
             <enum name="telephony" value="0"/>
             <enum name="facebook" value="1"/>
@@ -10,6 +10,7 @@
             <enum name="instagram" value="4"/>
             <enum name="twitter" value="5"/>
         </attr>
+        <attr name="network_txt" format="string"/>
     </declare-styleable>
 
 </resources>

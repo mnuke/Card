@@ -1,4 +1,4 @@
-package com.sixbynine.card.view;
+package com.sixbynine.card.ui.view;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -10,10 +10,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.sixbynine.card.R;
+import com.sixbynine.card.model.LogoSize;
 import com.sixbynine.card.model.SocialNetwork;
 import com.sixbynine.card.util.Logger;
 
@@ -23,75 +23,70 @@ import com.sixbynine.card.util.Logger;
 public class SocialNetworkEntryView extends RelativeLayout {
 
     private SocialNetwork mNetwork;
-    private ImageView mImageView;
+    private ImageButton mImageIcon;
     private EditText mEditText;
     private ImageButton mRemoveButton;
     private OnRemoveListener mListener;
 
     public interface OnRemoveListener {
         public void onRemove(SocialNetworkEntryView view);
+        public void onNetworkTapped(SocialNetworkEntryView view);
     }
 
     public SocialNetworkEntryView(Context context){
-        super(context);
-
-        LayoutInflater.from(context).inflate(R.layout.view_social_network_entry, this);
-        mImageView = (ImageView) findViewById(R.id.network_image_view);
-        mEditText = (EditText) findViewById(R.id.network_edit_text);
-        mEditText.addTextChangedListener(mTextWatcher);
-        mRemoveButton = (ImageButton) findViewById(R.id.remove_button);
-        mRemoveButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(mListener != null){
-                    mListener.onRemove(SocialNetworkEntryView.this);
-                }
-            }
-        });
+        this(context, null);
     }
 
     public SocialNetworkEntryView(Context context, AttributeSet attrs) {
         super(context, attrs);
-
         LayoutInflater.from(context).inflate(R.layout.view_social_network_entry, this);
-        mImageView = (ImageView) findViewById(R.id.network_image_view);
+        mImageIcon = (ImageButton) findViewById(R.id.network_image_view);
+        mImageIcon.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mListener != null) {
+                    mListener.onNetworkTapped(SocialNetworkEntryView.this);
+                }
+            }
+        });
         mEditText = (EditText) findViewById(R.id.network_edit_text);
         mEditText.addTextChangedListener(mTextWatcher);
         mRemoveButton = (ImageButton) findViewById(R.id.remove_button);
         mRemoveButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mListener != null){
+                if (mListener != null) {
                     mListener.onRemove(SocialNetworkEntryView.this);
                 }
             }
         });
 
+        if(attrs != null) {
+            TypedArray a = context.getTheme().obtainStyledAttributes(
+                    attrs,
+                    R.styleable.SocialNetworkDisplayView,
+                    0, 0);
 
-        TypedArray a = context.getTheme().obtainStyledAttributes(
-                attrs,
-                R.styleable.SocialNetworkEntryView,
-                0, 0);
+            final int networkId;
+            try {
+                networkId = a.getInt(R.styleable.SocialNetworkDisplayView_network, -1);
+            } finally {
+                a.recycle();
+            }
 
-        final int networkId;
-        try {
-            networkId = a.getInt(R.styleable.SocialNetworkEntryView_network, -1);
-        } finally {
-            a.recycle();
-        }
-
-        if(networkId != -1){
-            setNetwork(SocialNetwork.fromId(networkId));
+            if (networkId != -1) {
+                setNetwork(SocialNetwork.fromId(networkId));
+            }
         }
     }
 
     public void setNetwork(SocialNetwork network){
         mNetwork = network;
-        if(network.getLogo() > 0){
-            mImageView.setImageResource(network.getLogo());
+        if(network.getLogo(LogoSize.SMALL) > 0){
+            mImageIcon.setImageResource(network.getLogo(LogoSize.SMALL));
         }else{
             Logger.w("No image resource for network " + network.name());
-            mImageView.setImageDrawable(new ColorDrawable(0x55888888));
+            mImageIcon.setImageDrawable(new ColorDrawable(0x55888888));
         }
 
         String text = mEditText.getText().toString().replaceAll("@","");

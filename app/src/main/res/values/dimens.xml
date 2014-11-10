@@ -4,4 +4,6 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
 
     <dimen name="card_radius">5dp</dimen>
+    <dimen name="social_margin_bottom">10dp</dimen>
+    <dimen name="entry_view_left_margin">2dp</dimen>
 </resources>

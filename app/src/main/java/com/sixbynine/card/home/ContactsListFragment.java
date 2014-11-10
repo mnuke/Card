@@ -1,16 +1,19 @@
 package com.sixbynine.card.home;
 
 import android.app.Activity;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.melnykov.fab.FloatingActionButton;
 import com.sixbynine.card.R;
 import com.sixbynine.card.fragment.ActionBarFragment;
+import com.sixbynine.card.object.Contact;
 import com.sixbynine.card.persistent.ContactDataSource;
 
 /**
@@ -27,8 +30,10 @@ public class ContactsListFragment extends ActionBarFragment{
     private FloatingActionButton mFloatingActionButton;
     private ContactDataSource mDataSource;
 
+
     public interface Callback{
         public void onActionButtonClicked();
+        public void onContactClicked(Contact contact);
     }
 
     @Override
@@ -65,6 +70,14 @@ public class ContactsListFragment extends ActionBarFragment{
 
         mAdapter = new ContactsCursorAdapter(getActivity(), mDataSource.queryAllContacts(), 0);
         mListView.setAdapter(mAdapter);
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Cursor c = (Cursor) parent.getItemAtPosition(position);
+                Contact contact = Contact.fromCursor(c);
+                if(mCallback != null) mCallback.onContactClicked(contact);
+            }
+        });
 
         mFloatingActionButton = (FloatingActionButton) view.findViewById(R.id.fab);
         mFloatingActionButton.attachToListView(mListView);
@@ -81,6 +94,7 @@ public class ContactsListFragment extends ActionBarFragment{
     public void refreshContactList(){
         mAdapter.changeCursor(mDataSource.queryAllContacts());
     }
+
 
 
 
