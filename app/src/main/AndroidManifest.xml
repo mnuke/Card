@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.sixbynine.card" >
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
@@ -26,6 +30,7 @@
             android:theme="@style/AppTheme.NewContactActivity"/>
 
         <activity android:name=".display.ContactDisplayActivity"/>
+        <activity android:name=".contactimport.ImportActivity"/>
     </application>
 
 </manifest>
